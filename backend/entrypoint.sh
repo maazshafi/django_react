@@ -10,6 +10,7 @@ then
     echo "PostgreSQL started"
 fi
 
+echo "Apply database migrations"
 python manage.py collectstatic --noinput
 python manage.py migrate --noinput
 echo "from django.contrib.auth.models import User;

@@ -122,7 +122,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 MEDIA_URL = "/images/"
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_ROOT = "static/images"
 
@@ -135,10 +135,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 #########################################
-    ##  IMPORT LOCAL SETTINGS ##
+##  IMPORT LOCAL SETTINGS ##
 #########################################
 
 try:
-    from .local_settings import * 
-except ImportError: 
-    pass 
+    from .local_settings import *
+except ImportError:
+    pass
