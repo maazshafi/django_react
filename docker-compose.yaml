@@ -8,6 +8,7 @@ services:
     env_file:
       - ./postgres/.env
   django:
+    restart: always
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -17,7 +18,7 @@ services:
       - 8000
     env_file:
       - ./backend/.env
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn backend.wsgi:application -w 2 --bind 0.0.0.0:8000 --reload
     depends_on:
       - db
   react:
@@ -46,6 +47,8 @@ services:
       - 80:80
     depends_on:
       - react
+    links:
+    - django:django
 
 volumes:
   postgres_data:
