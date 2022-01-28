@@ -21,7 +21,7 @@ if DJANGO_ENV == "development" or DJANGO_ENV == "production":
         SECRET_KEY = "localsecret"
 
     try:
-        DEBUG = int(os.environ.get("DEBUG", default=0))
+        DEBUG = int(os.environ.get("DEBUG", default=True))
     except:
         DEBUG = False
 
@@ -64,6 +64,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 ##  STATIC FILES ROOT AND URL ##
 #################################################################
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 if not DEBUG:
     STATIC_ROOT = ""
