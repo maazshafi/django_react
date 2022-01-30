@@ -13,6 +13,7 @@ import {
 
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../actions/cartActions';
+import { getUserDetails } from '../actions/userActions';
 
 function CartScreen() {
   const productId = useParams();
@@ -23,6 +24,7 @@ function CartScreen() {
 
   const dispatch = useDispatch();
 
+  const { userInfo } = useSelector((state) => state.userLogin);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -37,7 +39,11 @@ function CartScreen() {
   };
 
   const checkoutHandler = () => {
-    navigate(`/login?redirect=shipping`);
+    if (userInfo) {
+      navigate('/shipping');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
