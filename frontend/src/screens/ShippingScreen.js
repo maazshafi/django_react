@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
+import CheckoutSteps from '../components/CheckoutSteps';
 import { saveShippingAddress } from '../actions/cartActions';
+
 function ShippingScreen() {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
@@ -13,7 +15,6 @@ function ShippingScreen() {
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
 
-  const location = useLocation();
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -25,6 +26,7 @@ function ShippingScreen() {
 
   return (
     <FormContainer>
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="address">
