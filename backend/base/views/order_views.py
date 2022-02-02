@@ -2,6 +2,7 @@ from itertools import product
 from os import stat
 from traceback import print_exception
 from django.shortcuts import render
+from platformdirs import user_runtime_dir
 from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -60,3 +61,26 @@ def addOrderItems(request):
 
         serializer = OrderSerializer(order, many=False)
         return Response(serializer.data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getOrderById(request, pk):
+    user = request.user
+
+    try:
+        order = Order.objects.get(_id=pk)
+        # need two types of users to be able to see this
+        # if admin to customer orders, or user owns the order
+        if user.is_staff or order.user == user:
+            serializer = OrderSerializer(order, many=False)
+            return Response(serializer.data)
+        else:
+            return Response(
+                {"detail": "Not authorized to view this order"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+    except:
+        return Response(
+            {"detail": "Order does not exist"}, status=status.HTTP_400_BAD_REQUEST
+        )

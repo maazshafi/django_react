@@ -13,7 +13,6 @@ import {
 
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../actions/cartActions';
-import { getUserDetails } from '../actions/userActions';
 
 function CartScreen() {
   const productId = useParams();
