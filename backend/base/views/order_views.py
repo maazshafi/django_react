@@ -37,10 +37,10 @@ def addOrderItems(request):
         # Create shipping address
         shipping = ShippingAddress.objects.create(
             order=order,
-            address=data["shippingAdress"]["address"],
-            city=data["shippingAdress"]["city"],
-            postalCode=data["shippingAdress"]["postalCode"],
-            country=data["shippingAdress"]["country"],
+            address=data["shippingAddress"]["address"],
+            city=data["shippingAddress"]["city"],
+            postalCode=data["shippingAddress"]["postalCode"],
+            country=data["shippingAddress"]["country"],
         )
         # Create order items and set order to orderItem relationship
         for i in orderItems:
@@ -58,5 +58,5 @@ def addOrderItems(request):
             product.countInStock -= item.qty
             product.save()
 
-    serializer = OrderSerializer(order, many=True)
-    return Response(serializer.data)
+        serializer = OrderSerializer(order, many=False)
+        return Response(serializer.data)
